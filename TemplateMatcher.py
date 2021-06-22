@@ -26,8 +26,7 @@ class TemplateMatcher():
     """Initiate a class with a template directory and a certain diagram,
        you want to use the templates on."""
     def __init__(self, template_dir, diagram, detection_rate=0.8,
-                    scale_min=1.0, scale_max=1.0, num_of_scales=1,
-                    rotation=False):
+                    scale_min=1.0, scale_max=1.0, num_of_scales=1):
         self.template_dir = template_dir
         self.diagram = diagram
         self.template_names = []
@@ -37,9 +36,6 @@ class TemplateMatcher():
         self.scale_min = scale_min
         self.scale_max = scale_max
         self.num_of_scales = num_of_scales
-        # this variable checks whether the template matcher needs to check
-        # the four possible 90 degree rotations
-        self.rotation = rotation
         # for storing the labels and label bounding boxes
         self.labels = []
         self.labels_bbox = np.empty((0, 6))
@@ -319,11 +315,18 @@ def index_page():
 def template_POST():
     filename = request.form.get('filename').strip()
     folder = request.form.get('templatefolder').strip()
+    detection_rate = float(request.form.get('threshold').strip())
+    scale_min = float(request.form.get('scalemin').strip())
+    scale_max = float(request.form.get('scalemax').strip())
+    scale_num = int(request.form.get('scalenum').strip())
+
     if not filename or not folder:
         return 'Diagram or template folder is incorrect!', 400
-
+        
     # match templates
-    t = TemplateMatcher(folder, filename, detection_rate=0.65)
+    t = TemplateMatcher(folder, filename, detection_rate=detection_rate,
+                            scale_min=scale_min, scale_max=scale_max,
+                            num_of_scales=scale_num)
     names, location, counts, labels, templates =  t.match_templates()
 
     # put template numbers into strings

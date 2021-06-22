@@ -51,7 +51,11 @@ $(document).ready(function() {
         $(this).attr("disabled", true);
         var data = {
             'filename': $('.panel-block.is-active').text(),
-            'templatefolder': $('#templatefolder').val()
+            'templatefolder': $('#templatefolder').val(),
+            'threshold': $('#threshold').val(),
+            'scalemin': $('#scalemin').val(),
+            'scalemax': $('#scalemax').val(),
+            'scalenum': $('#scalenum').val()
         };
         await $.ajax({
             type: 'POST',
@@ -63,7 +67,12 @@ $(document).ready(function() {
                 loc = result['location'];
                 labels = result['labels'];
                 components = result['components'];
-                
+                $('#componenttable').empty();
+                $('#labeltable').empty();
+
+                $('#componenttable').append('<tr><th>Component</th><th>Counts</th></tr>');
+                $('#labeltable').append('<tr><th>Component</th><th>Location</th><th>Label</th></tr>');
+
                 // make a table for the count
                 for (var i = 0; i < names.length; i++) {
                     $('#componenttable').append(

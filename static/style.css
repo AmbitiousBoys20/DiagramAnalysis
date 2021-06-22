@@ -22,8 +22,17 @@ body{
     background-color: white;
 }
 
-.button {
+.button, .select {
     margin-top: 10px;
+}
+
+.label {
+    margin-top: 25px;
+    margin-left: 5px;
+}
+
+#thresholdlabel {
+    margin-top: 20px;
 }
 
 #diagramimg {
