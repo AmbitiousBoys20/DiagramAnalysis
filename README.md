@@ -13,6 +13,10 @@ To start using this repository, execute the following steps:
 5. Store templates in a folder, and .pdf files of circuit diagrams in static/diagrams. Store them in this folder, otherwise they won't load into the application!
 6. Run the program with python TemplateMatcher.py. This should start a server on the localhost http://127.0.0.1:5000 and open your default browser on this specific page.
 
+<p align="center">
+  <img src="https://github.com/AmbitiousBoys20/DiagramAnalysis/blob/master/meestergif.gif" />
+</p>
+
 # DOCUMENTATION
 
 ## Class:
