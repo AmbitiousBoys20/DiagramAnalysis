@@ -1,4 +1,4 @@
-## Diagram - Template Matcher
+# Diagram - Template Matcher
 
 This repository contains a template matcher, which takes templates from a folder and matches them with pdfs of electrical circuit diagrams. The labels next to these templates are also recognized, using both pdfminer for text extraction and Google Tesseract's OCR library for character recognition. The program itself is a live server which runs on localhost and provides a small user interface to load in diagrams and templates.
 
@@ -15,7 +15,7 @@ To start using this repository, execute the following steps:
 
 # DOCUMENTATION
 
-Class:
+##Class:
 
 Instantiate a new template matching class with TemplateMatcher(...). Takes in the following arguments:
   - template_dir: The directory where the templates should be stored that are being matched with the circuit diagram.
@@ -25,7 +25,7 @@ Instantiate a new template matching class with TemplateMatcher(...). Takes in th
   - scale_max: Maximum scale for the template to be matched on. Default is 1.0.
   - scale_num: The number of scales the algorithm should search on in between scale_min and scale_max. If for example a scale_num of 50 is chosen with a scale_min of 0.5 and a scale_max of 2.0, the template is resized 50 times between 0.5 and 2.0; and then matched on the diagram. This functionality is slow, since it is computationally heavy! Default is 1.
 
-Functions:
+##Functions:
 
 **match_templates**():
   - This is the heart of the class. It takes the diagram and template folder of the TemplateMatcher class and loads both into python. It then uses OpenCV's Normalized Cross Coefficient template matcher for each template. It also looks on different scale if the user has indicated this in the class instantiation. The templates find multiple matches on the same spot. To solve this, clusters of matches are created based on euclidean distance, and these matches are then analyzed on their match strength. The higher the match strength, the better the template matches on that location. Therefore the algorithm chooses the match in the cluster with the highest match strength. The best matches are then stored in a numpy array with their location, width, height and belonging template. The center of the template's bounding box is also stored to easily find the distance to the labels later on. The rectangles are then placed around the templates with place_rect. After this, the function tries to extract text from the pdf with label_extraction. If this fails, it does Optical Character Recognition with the pytesseract library. For both methods, it finds the closest label to the found template match for a particular symbol. It then places rectangles (in a different color) around the labels as well. Lastly, match_templates creates a new pdf file 'out.pdf' which contains the rectangles around the found templates and labels. It returns:
