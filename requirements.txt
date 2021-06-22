@@ -1,0 +1,9 @@
+opencv-python
+numpy
+glob2
+pdfminer
+pytesseract
+Pillow
+flask
+pdf2image
+scipy
