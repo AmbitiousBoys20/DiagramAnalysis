@@ -27,7 +27,7 @@ Instantiate a new template matching class with TemplateMatcher(...). Takes in th
 
 Functions:
 
-match_templates():
+**match_templates**():
   - This is the heart of the class. It takes the diagram and template folder of the TemplateMatcher class and loads both into python. It then uses OpenCV's Normalized Cross Coefficient template matcher for each template. It also looks on different scale if the user has indicated this in the class instantiation. The templates find multiple matches on the same spot. To solve this, clusters of matches are created based on euclidean distance, and these matches are then analyzed on their match strength. The higher the match strength, the better the template matches on that location. Therefore the algorithm chooses the match in the cluster with the highest match strength. The best matches are then stored in a numpy array with their location, width, height and belonging template. The center of the template's bounding box is also stored to easily find the distance to the labels later on. The rectangles are then placed around the templates with place_rect. After this, the function tries to extract text from the pdf with label_extraction. If this fails, it does Optical Character Recognition with the pytesseract library. For both methods, it finds the closest label to the found template match for a particular symbol. It then places rectangles (in a different color) around the labels as well. Lastly, match_templates creates a new pdf file 'out.pdf' which contains the rectangles around the found templates and labels. It returns:
     - The unique names of the templates
     - The location of the templates
@@ -35,24 +35,24 @@ match_templates():
     - The labels corresponding to the templates
     - A list of the found templates
 
-place_rect():
+**place_rect**():
   - This function places a rectangle on the diagram corresponding to the given bounding box and color.
   - args
     - bbox: bounding box of the rectangle area and size on the diagram
     - color: BGR color for the rectangle
 
-label_extraction():
+**label_extraction**():
   - This function uses the pdfminer module to read the bytes of a pdf file. The pdf file is then analyzed with a parser. If a pdf has extractable text, then pdfminer is able to do so. It returns the location of the text as well as the text itself. The label_extraction function creates a bounding box relative to the pdf and stores the label as well.
-    - parse_obj() is a child function of label_extraction. This parses every text label found individually by the label_extraction function.
+    - **parse_obj**() is a child function of label_extraction. This parses every text label found individually by the label_extraction function.
 
-label_OCR():
+**label_OCR**():
  - This function uses Google's C++ OCR Tesseract with a python wrapper called pytesseract. It searches a small area for a label. It then, just like label_extraction, creates a bounding box for the label relative to the pdf. Furthermore, it also returns the text. Pytesseract is unreliable, and it is strongly advised to use pdfs that have selectable and/or extractable text.
  - args
    - img_section: A 70 by 70 image area around a found template. This is where tesseract will search for a label.
    - loc: the location of the area relative to the diagram pdf.
 
-index_page():
+**index_page**():
  - Loads the index page and loads the pdfs in the static/diagrams folder. 
 
-template_POST():
+**template_POST**():
  - Handles the request from the front-end to match the selected diagram with the selected template folder. It returns a json dict object with the found templates, counts, locations, etc. 
