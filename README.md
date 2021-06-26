@@ -20,7 +20,9 @@ To start using this repository, execute the following steps:
 In the textbox on the left, fill in the template folder with the desired templates. Click the diagram which needs analysis. Then tweak the threshold and scale hyperparameters. Threshold determines how strong the template needs to correlate with the found image to determine a match. The scale range from minimum to maximum determines on which scales (in terms of size) the template has to be resized. The number of scales just determines how often the template should be resized to a different scale.
 
 For diagram 1 use a threshold of 0.8
+
 For diagram 2 use a threshold of 0.65
+
 For diagram 3 use a threshhold of 0.8
 
 # DOCUMENTATION
