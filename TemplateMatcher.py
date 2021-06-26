@@ -88,8 +88,9 @@ class TemplateMatcher():
 
             template_nr += 1
 
+        # handle the case for no matches
         if not match_collection.any():
-            return 'No matches found for the templates given.'
+            return None, None, None, None, None
         
         # create a distance matrix based on euclidean distance between points
         distance_m = linkage(match_collection[:, :2])
@@ -155,7 +156,6 @@ class TemplateMatcher():
             if number not in templates:
                 counts = np.insert(counts, number, 0)
                 
-        # cv.imwrite('out.png', self.image_rgb)
         pdf = Image.fromarray(self.image_rgb)
         pdf = pdf.convert('RGB')
         pdf.save('static/diagrams/out.pdf')
@@ -327,7 +327,11 @@ def template_POST():
     t = TemplateMatcher(folder, filename, detection_rate=detection_rate,
                             scale_min=scale_min, scale_max=scale_max,
                             num_of_scales=scale_num)
+    
     names, location, counts, labels, templates =  t.match_templates()
+
+    if names == None:
+        return 'No matches were found for the given templates!', 401
 
     # put template numbers into strings
     components = []

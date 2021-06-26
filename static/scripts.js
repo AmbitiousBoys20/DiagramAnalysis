@@ -109,6 +109,10 @@ $(document).ready(function() {
                 400: function() {
                     alert('Diagram or folder not found!');
                     unlockbtn();
+                },
+                401: function() {
+                    alert('Templates did not find any matches!');
+                    unlockbtn();
                 }
             }
         });
